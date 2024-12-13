@@ -7,6 +7,9 @@ var names [3]string = [3]string{"Hisoka", "Gon", "Killua"}
 
 
 func main() {
-	fmt.Printf("The numbers are %v\n", numbers)
-	fmt.Printf("The names are %v\n", names)
+	for i := 0; i < len(numbers); i++ {
+		fmt.Println(numbers[i])
+	}
+	fmt.Println("**********")
+	fmt.Printf("%+v\n", names)
 }
