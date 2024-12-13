@@ -6,26 +6,40 @@ import (
 	"os"
 )
 
-
 func main() {
 	var content string
-	content = "Hello Hisoka\nHow are you doing?"
-	file,err := os.Create("./files/file1.txt")
+	content = "Hello\nHow are you doing?"
+	file, err := os.Create("./files/file1.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	lenghth, err := file.WriteString(content)
+	length, err := file.WriteString(content)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("Lenght: %d bytes\n", lenghth)
+	fmt.Printf("Length: %d bytes\n", length)
 	defer file.Close()
 
 	readFile("./files/file1.txt")
-	writeMore("./files/file1.txt", "\nI'm doing fine, thank you!")
-	readFile("./files/file1.txt")
+
+	// Ask user for more content
+	var moreContent string
+	again := true
+	for again { // Change while to for loop
+		fmt.Print("Do you want to add more content? (y/n): ")
+		fmt.Scan(&moreContent)
+		if moreContent == "y" {
+			fmt.Print("Enter more content: ")
+			fmt.Scan(&content) // You may want to append instead of overwriting content
+			writeMore("./files/file1.txt", content)
+			readFile("./files/file1.txt")
+		} else {
+			fmt.Println("Goodbye!")
+			again = false
+		}
+	}
 }
 
 func readFile(filename string) {
@@ -57,12 +71,10 @@ func writeMore(filename string, content string) {
 	}
 	defer file.Close()
 
-	lenght, err := file.WriteString(content)
+	length, err := file.WriteString(content)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("Lenght: %d bytes\n", lenght)
+	fmt.Printf("Length: %d bytes\n", length)
 }
-
-
